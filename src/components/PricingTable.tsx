@@ -57,7 +57,13 @@ const premiumFeatures = [
 const standardBadges = ["HD", "FHD"];
 const premiumBadges = ["HD", "FHD", "4K"];
 
-const paymentMethods = ["Apple Pay", "VISA", "MasterCard", "iDEAL", "PayPal"];
+const paymentIcons = [
+  { name: "Apple Pay", src: paymentApplepay },
+  { name: "VISA", src: paymentVisa },
+  { name: "MasterCard", src: paymentMastercard },
+  { name: "iDEAL", src: paymentIdeal },
+  { name: "PayPal", src: paymentPaypal },
+];
 
 export default function PricingTable() {
   const [tier, setTier] = useState<PlanTier>("standard");
