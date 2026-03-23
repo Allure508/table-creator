@@ -153,9 +153,9 @@ export default function PricingTable() {
               </button>
 
               {/* Payment icons */}
-              <div className="flex justify-center items-center gap-2 mt-4 text-xs text-muted-foreground">
-                {paymentMethods.map((m) => (
-                  <span key={m} className="font-semibold">{m}</span>
+              <div className="flex justify-center items-center gap-3 mt-4">
+                {paymentIcons.map((m) => (
+                  <img key={m.name} src={m.src} alt={m.name} loading="lazy" className="h-7 w-auto object-contain" />
                 ))}
               </div>
             </div>
