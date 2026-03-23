@@ -1,5 +1,10 @@
 import { useState } from "react";
 import { Check, Ban, Crown } from "lucide-react";
+import paymentApplepay from "@/assets/payment-applepay.png";
+import paymentVisa from "@/assets/payment-visa.png";
+import paymentMastercard from "@/assets/payment-mastercard.png";
+import paymentIdeal from "@/assets/payment-ideal.png";
+import paymentPaypal from "@/assets/payment-paypal.png";
 
 type PlanTier = "standard" | "premium";
 
@@ -52,7 +57,13 @@ const premiumFeatures = [
 const standardBadges = ["HD", "FHD"];
 const premiumBadges = ["HD", "FHD", "4K"];
 
-const paymentMethods = ["Apple Pay", "VISA", "MasterCard", "iDEAL", "PayPal"];
+const paymentIcons = [
+  { name: "Apple Pay", src: paymentApplepay },
+  { name: "VISA", src: paymentVisa },
+  { name: "MasterCard", src: paymentMastercard },
+  { name: "iDEAL", src: paymentIdeal },
+  { name: "PayPal", src: paymentPaypal },
+];
 
 export default function PricingTable() {
   const [tier, setTier] = useState<PlanTier>("standard");
@@ -142,9 +153,9 @@ export default function PricingTable() {
               </button>
 
               {/* Payment icons */}
-              <div className="flex justify-center items-center gap-2 mt-4 text-xs text-muted-foreground">
-                {paymentMethods.map((m) => (
-                  <span key={m} className="font-semibold">{m}</span>
+              <div className="flex justify-center items-center gap-3 mt-4">
+                {paymentIcons.map((m) => (
+                  <img key={m.name} src={m.src} alt={m.name} loading="lazy" className="h-7 w-auto object-contain" />
                 ))}
               </div>
             </div>
