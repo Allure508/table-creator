@@ -1,0 +1,156 @@
+import { useState } from "react";
+import { Check, Ban, Crown } from "lucide-react";
+
+type PlanTier = "standard" | "premium";
+
+interface PlanData {
+  duration: string;
+  price: string;
+  originalPrice: string;
+  discount: string;
+  popular?: boolean;
+}
+
+const standardPlans: PlanData[] = [
+  { duration: "1 MAAND", price: "€ 11.99", originalPrice: "€24", discount: "50% KORTING" },
+  { duration: "3 MAANDEN", price: "€ 25.99", originalPrice: "€50", discount: "50% KORTING" },
+  { duration: "6 MAANDEN", price: "€ 35.99", originalPrice: "€70", discount: "50% KORTING" },
+  { duration: "12 MAANDEN", price: "€ 45.99", originalPrice: "€90", discount: "50% KORTING", popular: true },
+];
+
+const premiumPlans: PlanData[] = [
+  { duration: "1 MAAND", price: "€ 19.99", originalPrice: "€25", discount: "50% KORTING" },
+  { duration: "3 MAANDEN", price: "€ 29.99", originalPrice: "€60", discount: "50% KORTING" },
+  { duration: "6 MAANDEN", price: "€ 49.99", originalPrice: "€100", discount: "50% KORTING" },
+  { duration: "12 MAANDEN", price: "€ 69.99", originalPrice: "€140", discount: "50% KORTING", popular: true },
+];
+
+const standardFeatures = [
+  { icon: "ban", text: "Plus Extra 2 Maanden" },
+  { icon: "check", text: "Directe Activering!" },
+  { icon: "check", text: "+15.000 Kanalen" },
+  { icon: "check", text: "+80.000 Films en Series (VOD)" },
+  { icon: "check", text: "RTL - Viaplay - Videoland" },
+  { icon: "check", text: "Terugkijken en EPG" },
+  { icon: "check", text: "FHD, HD, Kanalen" },
+  { icon: "check", text: "24/7 Live Chat Ondersteuning" },
+  { icon: "check-green", text: "7-dagen geld-terug-garantie" },
+];
+
+const premiumFeatures = [
+  { icon: "ban", text: "Plus Extra 3 Maanden" },
+  { icon: "check", text: "Directe Activering!" },
+  { icon: "check", text: "+30.000 Kanalen" },
+  { icon: "check", text: "+180k Films en Series (VOD)" },
+  { icon: "check", text: "RTL - Viaplay - Videoland" },
+  { icon: "check", text: "Terugkijken en EPG" },
+  { icon: "check", text: "4K, UHD, FHD, HD, Kanalen" },
+  { icon: "check", text: "24/7 Live Chat Ondersteuning" },
+  { icon: "check-green", text: "7-dagen geld-terug-garantie" },
+];
+
+const standardBadges = ["HD", "FHD"];
+const premiumBadges = ["HD", "FHD", "4K"];
+
+const paymentMethods = ["Apple Pay", "VISA", "MasterCard", "iDEAL", "PayPal"];
+
+export default function PricingTable() {
+  const [tier, setTier] = useState<PlanTier>("standard");
+
+  const plans = tier === "standard" ? standardPlans : premiumPlans;
+  const features = tier === "standard" ? standardFeatures : premiumFeatures;
+  const badges = tier === "standard" ? standardBadges : premiumBadges;
+  const buttonClass = tier === "standard" ? "bg-standard-active text-primary-foreground" : "bg-accent text-accent-foreground";
+
+  return (
+    <div className="w-full max-w-6xl mx-auto px-4 py-12">
+      {/* Toggle */}
+      <div className="flex justify-center mb-10">
+        <div className="inline-flex rounded-full border border-border bg-card overflow-hidden">
+          <button
+            onClick={() => setTier("standard")}
+            className={`px-8 py-3 text-base font-semibold transition-colors ${
+              tier === "standard" ? "bg-standard-active text-primary-foreground" : "text-foreground"
+            }`}
+          >
+            Standard
+          </button>
+          <button
+            onClick={() => setTier("premium")}
+            className={`px-8 py-3 text-base font-semibold transition-colors flex items-center gap-1.5 ${
+              tier === "premium" ? "bg-premium-active text-primary-foreground" : "text-foreground"
+            }`}
+          >
+            Premium <Crown className="w-4 h-4" />
+          </button>
+        </div>
+      </div>
+
+      {/* Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        {plans.map((plan) => (
+          <div
+            key={plan.duration}
+            className={`relative rounded-lg border bg-card overflow-hidden flex flex-col ${
+              plan.popular ? "border-popular border-2" : "border-border"
+            }`}
+          >
+            {plan.popular && (
+              <div className="bg-popular text-accent-foreground text-center text-xs font-bold py-1.5 tracking-wider uppercase">
+                Most Popular
+              </div>
+            )}
+
+            <div className="p-6 flex flex-col flex-1">
+              {/* Header */}
+              <h3 className={`text-xl font-bold text-center ${tier === "premium" ? "text-premium-active" : "text-foreground"}`}>
+                {plan.duration}
+              </h3>
+              <p className="text-4xl font-extrabold text-center mt-2 text-foreground">{plan.price}</p>
+              <p className="text-center mt-2 text-sm">
+                <span className="text-discount font-semibold line-through">ORIGINELE PRIJS {plan.originalPrice}</span>
+                <span className="text-muted-foreground mx-2">|</span>
+                <span className="text-success font-semibold">{plan.discount}</span>
+              </p>
+
+              {/* Badges */}
+              <div className="flex justify-center gap-2 mt-4">
+                {badges.map((b) => (
+                  <span key={b} className="border border-foreground rounded px-2 py-0.5 text-xs font-bold text-foreground">
+                    {b}
+                  </span>
+                ))}
+              </div>
+
+              {/* Features */}
+              <ul className="mt-6 space-y-3 flex-1">
+                {features.map((f, i) => (
+                  <li key={i} className="flex items-start gap-2 text-sm text-foreground">
+                    {f.icon === "ban" ? (
+                      <Ban className="w-4 h-4 mt-0.5 text-muted-foreground shrink-0" />
+                    ) : (
+                      <Check className={`w-4 h-4 mt-0.5 shrink-0 ${f.icon === "check-green" ? "text-success" : "text-muted-foreground"}`} />
+                    )}
+                    <span className={f.icon === "check-green" ? "font-semibold text-success" : ""}>{f.text}</span>
+                  </li>
+                ))}
+              </ul>
+
+              {/* CTA */}
+              <button className={`w-full mt-6 py-3 rounded-md font-bold text-base transition-opacity hover:opacity-90 ${buttonClass}`}>
+                Abonneer je nu
+              </button>
+
+              {/* Payment icons */}
+              <div className="flex justify-center items-center gap-2 mt-4 text-xs text-muted-foreground">
+                {paymentMethods.map((m) => (
+                  <span key={m} className="font-semibold">{m}</span>
+                ))}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
