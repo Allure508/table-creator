@@ -1,5 +1,10 @@
 import { useState } from "react";
 import { Check, Ban, Crown } from "lucide-react";
+import paymentApplepay from "@/assets/payment-applepay.png";
+import paymentVisa from "@/assets/payment-visa.png";
+import paymentMastercard from "@/assets/payment-mastercard.png";
+import paymentIdeal from "@/assets/payment-ideal.png";
+import paymentPaypal from "@/assets/payment-paypal.png";
 
 type PlanTier = "standard" | "premium";
 
