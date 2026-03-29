@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Check, Ban, Crown } from "lucide-react";
+import SubscriptionDialog from "@/components/SubscriptionDialog";
 import paymentApplepay from "@/assets/payment-applepay.png";
 import paymentVisa from "@/assets/payment-visa.png";
 import paymentMastercard from "@/assets/payment-mastercard.png";
