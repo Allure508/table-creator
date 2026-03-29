@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+import { CheckCircle, Mail } from "lucide-react";
 
 interface SubscriptionDialogProps {
   open: boolean;
@@ -23,6 +24,7 @@ export default function SubscriptionDialog({ open, onOpenChange, plan, price }: 
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [loading, setLoading] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -42,11 +44,7 @@ export default function SubscriptionDialog({ open, onOpenChange, plan, price }: 
         },
       });
       if (error) throw error;
-      
-      toast.success("Aanvraag succesvol verzonden!");
-      setEmail("");
-      setPhone("");
-      onOpenChange(false);
+      setSubmitted(true);
     } catch {
       toast.error("Er is iets misgegaan. Probeer het opnieuw.");
     } finally {
@@ -54,28 +52,66 @@ export default function SubscriptionDialog({ open, onOpenChange, plan, price }: 
     }
   };
 
+  const handleClose = (isOpen: boolean) => {
+    if (!isOpen) {
+      setSubmitted(false);
+      setEmail("");
+      setPhone("");
+    }
+    onOpenChange(isOpen);
+  };
+
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={handleClose}>
       <DialogContent className="sm:max-w-md">
-        <DialogHeader>
-          <DialogTitle>Abonneer je nu</DialogTitle>
-          <DialogDescription>
-            Plan: <strong>{plan}</strong> — Prijs: <strong>{price}</strong>
-          </DialogDescription>
-        </DialogHeader>
-        <form onSubmit={handleSubmit} className="space-y-4 mt-2">
-          <div className="space-y-2">
-            <Label htmlFor="email">E-mail</Label>
-            <Input id="email" type="email" placeholder="jouw@email.nl" value={email} onChange={(e) => setEmail(e.target.value)} required />
+        {submitted ? (
+          <div className="flex flex-col items-center text-center py-6 space-y-5">
+            <div className="w-16 h-16 rounded-full bg-green-500 flex items-center justify-center">
+              <CheckCircle className="w-10 h-10 text-white" />
+            </div>
+            <h2 className="text-2xl font-bold text-foreground">Bedankt Voor Je Aanvraag!</h2>
+            <p className="text-muted-foreground">
+              Je aanvraag is ontvangen. 📧 Binnen <strong>10 tot 60 minuten</strong> ontvang je je abonnement en betaalinformatie via e-mail of WhatsApp.
+            </p>
+            <p className="text-muted-foreground text-sm">Vergeet niet je spamfolder te controleren.</p>
+            <Button
+              onClick={() => handleClose(false)}
+              className="w-full bg-pink-500 hover:bg-pink-600 text-white text-lg py-6"
+            >
+              Naar beginpagina
+            </Button>
+            <p className="font-semibold text-foreground">Contacteer Ons Via E-mail</p>
+            <a
+              href="mailto:contact@hollandiptv.com"
+              className="w-full flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white rounded-md py-3 text-lg font-medium transition-colors"
+            >
+              <Mail className="w-5 h-5" />
+              contact@hollandiptv.com
+            </a>
           </div>
-          <div className="space-y-2">
-            <Label htmlFor="phone">Telefoonnummer</Label>
-            <Input id="phone" type="tel" placeholder="+31 6 12345678" value={phone} onChange={(e) => setPhone(e.target.value)} required />
-          </div>
-          <Button type="submit" className="w-full" disabled={loading}>
-            {loading ? "Verzenden..." : "Verstuur aanvraag"}
-          </Button>
-        </form>
+        ) : (
+          <>
+            <DialogHeader>
+              <DialogTitle>Abonneer je nu</DialogTitle>
+              <DialogDescription>
+                Plan: <strong>{plan}</strong> — Prijs: <strong>{price}</strong>
+              </DialogDescription>
+            </DialogHeader>
+            <form onSubmit={handleSubmit} className="space-y-4 mt-2">
+              <div className="space-y-2">
+                <Label htmlFor="email">E-mail</Label>
+                <Input id="email" type="email" placeholder="jouw@email.nl" value={email} onChange={(e) => setEmail(e.target.value)} required />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="phone">Telefoonnummer</Label>
+                <Input id="phone" type="tel" placeholder="+31 6 12345678" value={phone} onChange={(e) => setPhone(e.target.value)} required />
+              </div>
+              <Button type="submit" className="w-full" disabled={loading}>
+                {loading ? "Verzenden..." : "Verstuur aanvraag"}
+              </Button>
+            </form>
+          </>
+        )}
       </DialogContent>
     </Dialog>
   );
