@@ -68,6 +68,8 @@ const paymentIcons = [
 
 export default function PricingTable() {
   const [tier, setTier] = useState<PlanTier>("standard");
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState<{ duration: string; price: string } | null>(null);
 
   const plans = tier === "standard" ? standardPlans : premiumPlans;
   const features = tier === "standard" ? standardFeatures : premiumFeatures;
