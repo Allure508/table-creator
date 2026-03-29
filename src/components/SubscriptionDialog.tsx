@@ -42,7 +42,7 @@ export default function SubscriptionDialog({ open, onOpenChange, plan, price }: 
         },
       });
       if (error) throw error;
-      if (!res.ok) throw new Error("Request failed");
+      
       toast.success("Aanvraag succesvol verzonden!");
       setEmail("");
       setPhone("");
