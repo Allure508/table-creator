@@ -32,17 +32,16 @@ export default function SubscriptionDialog({ open, onOpenChange, plan, price }: 
     }
     setLoading(true);
     try {
-      const res = await fetch("https://forms.voodportal.com/api/webhook/Koop_IPTV", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
+      const { data, error } = await supabase.functions.invoke("webhook-proxy", {
+        body: {
           email,
           phone,
           plan,
           price,
           form_type: "subscription_request",
-        }),
+        },
       });
+      if (error) throw error;
       if (!res.ok) throw new Error("Request failed");
       toast.success("Aanvraag succesvol verzonden!");
       setEmail("");
