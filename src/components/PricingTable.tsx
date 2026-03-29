@@ -151,7 +151,10 @@ export default function PricingTable() {
               </ul>
 
               {/* CTA */}
-              <button className={`w-full mt-6 py-3 rounded-md font-bold text-base transition-opacity hover:opacity-90 ${buttonClass}`}>
+              <button
+                onClick={() => { setSelectedPlan({ duration: plan.duration, price: plan.price }); setDialogOpen(true); }}
+                className={`w-full mt-6 py-3 rounded-md font-bold text-base transition-opacity hover:opacity-90 ${buttonClass}`}
+              >
                 Abonneer je nu
               </button>
 
