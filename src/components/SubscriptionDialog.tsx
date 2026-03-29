@@ -74,12 +74,12 @@ export default function SubscriptionDialog({ open, onOpenChange, plan, price }: 
               Je aanvraag is ontvangen. 📧 Binnen <strong>10 tot 60 minuten</strong> ontvang je je abonnement en betaalinformatie via e-mail of WhatsApp.
             </p>
             <p className="text-muted-foreground text-sm">Vergeet niet je spamfolder te controleren.</p>
-            <Button
-              onClick={() => handleClose(false)}
-              className="w-full bg-pink-500 hover:bg-pink-600 text-white text-lg py-6"
+            <a
+              href="https://www.koop-iptv.nl/"
+              className="w-full flex items-center justify-center bg-pink-500 hover:bg-pink-600 text-white text-lg py-3 rounded-md font-medium transition-colors"
             >
               Naar beginpagina
-            </Button>
+            </a>
             <p className="font-semibold text-foreground">Contacteer Ons Via E-mail</p>
             <a
               href="mailto:contact@hollandiptv.com"
