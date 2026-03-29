@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Check, Ban, Crown } from "lucide-react";
+import SubscriptionDialog from "@/components/SubscriptionDialog";
 import paymentApplepay from "@/assets/payment-applepay.png";
 import paymentVisa from "@/assets/payment-visa.png";
 import paymentMastercard from "@/assets/payment-mastercard.png";
@@ -67,6 +68,8 @@ const paymentIcons = [
 
 export default function PricingTable() {
   const [tier, setTier] = useState<PlanTier>("standard");
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState<{ duration: string; price: string } | null>(null);
 
   const plans = tier === "standard" ? standardPlans : premiumPlans;
   const features = tier === "standard" ? standardFeatures : premiumFeatures;
@@ -148,7 +151,10 @@ export default function PricingTable() {
               </ul>
 
               {/* CTA */}
-              <button className={`w-full mt-6 py-3 rounded-md font-bold text-base transition-opacity hover:opacity-90 ${buttonClass}`}>
+              <button
+                onClick={() => { setSelectedPlan({ duration: plan.duration, price: plan.price }); setDialogOpen(true); }}
+                className={`w-full mt-6 py-3 rounded-md font-bold text-base transition-opacity hover:opacity-90 ${buttonClass}`}
+              >
                 Abonneer je nu
               </button>
 
@@ -162,6 +168,14 @@ export default function PricingTable() {
           </div>
         ))}
       </div>
+      {selectedPlan && (
+        <SubscriptionDialog
+          open={dialogOpen}
+          onOpenChange={setDialogOpen}
+          plan={`${tier} - ${selectedPlan.duration}`}
+          price={selectedPlan.price}
+        />
+      )}
     </div>
   );
 }
