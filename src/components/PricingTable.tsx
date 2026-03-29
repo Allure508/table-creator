@@ -168,6 +168,14 @@ export default function PricingTable() {
           </div>
         ))}
       </div>
+      {selectedPlan && (
+        <SubscriptionDialog
+          open={dialogOpen}
+          onOpenChange={setDialogOpen}
+          plan={`${tier} - ${selectedPlan.duration}`}
+          price={selectedPlan.price}
+        />
+      )}
     </div>
   );
 }
