@@ -69,7 +69,7 @@ export default function SubscriptionDialog({ open, onOpenChange, plan, price }: 
       <DialogContent className="sm:max-w-md">
         {submitted ? (
           <div className="flex flex-col items-center text-center py-6 space-y-5">
-            <div className={`w-16 h-16 rounded-full ${isStandard ? "bg-premium-active" : "bg-green-500"} flex items-center justify-center`}>
+            <div className={`w-16 h-16 rounded-full ${isStandard ? "bg-premium-active" : "bg-popular"} flex items-center justify-center`}>
               <CheckCircle className="w-10 h-10 text-white" />
             </div>
             <h2 className={`text-2xl font-bold ${accentText}`}>Bedankt Voor Je Aanvraag!</h2>
