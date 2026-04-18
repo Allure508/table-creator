@@ -109,7 +109,7 @@ export default function SubscriptionDialog({ open, onOpenChange, plan, price }: 
                 <Label htmlFor="phone">Telefoonnummer</Label>
                 <Input id="phone" type="tel" placeholder="+31 6 12345678" value={phone} onChange={(e) => setPhone(e.target.value)} required />
               </div>
-              <Button type="submit" className={`w-full ${isStandard ? "bg-premium-active hover:bg-premium-active/90 text-primary-foreground" : ""}`} disabled={loading}>
+              <Button type="submit" className={`w-full ${isStandard ? "bg-premium-active hover:bg-premium-active/90 text-primary-foreground" : "bg-popular hover:bg-popular/90 text-accent-foreground"}`} disabled={loading}>
                 {loading ? "Verzenden..." : "Verstuur aanvraag"}
               </Button>
             </form>
