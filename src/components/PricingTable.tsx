@@ -106,11 +106,21 @@ export default function PricingTable() {
           <div
             key={plan.duration}
             className={`relative rounded-lg border bg-card overflow-hidden flex flex-col ${
-              plan.popular ? "border-popular border-2" : "border-border"
+              plan.popular
+                ? tier === "standard"
+                  ? "border-premium-active border-2"
+                  : "border-popular border-2"
+                : "border-border"
             }`}
           >
             {plan.popular && (
-              <div className="bg-popular text-accent-foreground text-center text-xs font-bold py-1.5 tracking-wider uppercase">
+              <div
+                className={`text-center text-xs font-bold py-1.5 tracking-wider uppercase ${
+                  tier === "standard"
+                    ? "bg-premium-active text-primary-foreground"
+                    : "bg-popular text-accent-foreground"
+                }`}
+              >
                 Most Popular
               </div>
             )}
