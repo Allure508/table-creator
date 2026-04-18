@@ -72,8 +72,19 @@ export default function PricingTable() {
   const [selectedPlan, setSelectedPlan] = useState<{ duration: string; price: string } | null>(null);
 
   const plans = tier === "standard" ? standardPlans : premiumPlans;
-  const features = tier === "standard" ? standardFeatures : premiumFeatures;
+  const baseFeatures = tier === "standard" ? standardFeatures : premiumFeatures;
   const badges = tier === "standard" ? standardBadges : premiumBadges;
+
+  const getFeaturesForPlan = (duration: string) => {
+    const is12Months = duration === "12 MAANDEN";
+    return baseFeatures.map((f) => {
+      const isExtraMonths = f.text.startsWith("Plus Extra");
+      if (isExtraMonths && is12Months) {
+        return { ...f, icon: "check" };
+      }
+      return f;
+    });
+  };
   const buttonClass = tier === "standard" ? "bg-standard-active text-primary-foreground" : "bg-accent text-accent-foreground";
 
   return (
