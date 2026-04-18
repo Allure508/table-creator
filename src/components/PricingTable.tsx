@@ -72,8 +72,19 @@ export default function PricingTable() {
   const [selectedPlan, setSelectedPlan] = useState<{ duration: string; price: string } | null>(null);
 
   const plans = tier === "standard" ? standardPlans : premiumPlans;
-  const features = tier === "standard" ? standardFeatures : premiumFeatures;
+  const baseFeatures = tier === "standard" ? standardFeatures : premiumFeatures;
   const badges = tier === "standard" ? standardBadges : premiumBadges;
+
+  const getFeaturesForPlan = (duration: string) => {
+    const is12Months = duration === "12 MAANDEN";
+    return baseFeatures.map((f) => {
+      const isExtraMonths = f.text.startsWith("Plus Extra");
+      if (isExtraMonths && is12Months) {
+        return { ...f, icon: "check" };
+      }
+      return f;
+    });
+  };
   const buttonClass = tier === "standard" ? "bg-standard-active text-primary-foreground" : "bg-accent text-accent-foreground";
 
   return (
@@ -148,7 +159,7 @@ export default function PricingTable() {
 
               {/* Features */}
               <ul className="mt-6 space-y-3 flex-1">
-                {features.map((f, i) => (
+                {getFeaturesForPlan(plan.duration).map((f, i) => (
                   <li key={i} className="flex items-start gap-2 text-sm text-foreground">
                     {f.icon === "ban" ? (
                       <Ban className="w-4 h-4 mt-0.5 text-muted-foreground shrink-0" />
@@ -159,7 +170,6 @@ export default function PricingTable() {
                   </li>
                 ))}
               </ul>
-
               {/* CTA */}
               <button
                 onClick={() => { setSelectedPlan({ duration: plan.duration, price: plan.price }); setDialogOpen(true); }}
