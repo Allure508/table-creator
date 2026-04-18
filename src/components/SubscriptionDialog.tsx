@@ -22,8 +22,8 @@ interface SubscriptionDialogProps {
 
 export default function SubscriptionDialog({ open, onOpenChange, plan, price }: SubscriptionDialogProps) {
   const isStandard = plan.toLowerCase().startsWith("standard");
-  const accentBg = isStandard ? "bg-premium-active hover:bg-premium-active/90" : "bg-pink-500 hover:bg-pink-600";
-  const accentText = isStandard ? "text-premium-active" : "text-foreground";
+  const accentBg = isStandard ? "bg-premium-active hover:bg-premium-active/90" : "bg-popular hover:bg-popular/90";
+  const accentText = isStandard ? "text-premium-active" : "text-popular";
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [loading, setLoading] = useState(false);
