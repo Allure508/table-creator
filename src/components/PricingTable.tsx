@@ -32,7 +32,7 @@ const premiumPlans: PlanData[] = [
 ];
 
 const standardFeatures = [
-  { icon: "ban", text: "Plus Extra 2 Maanden" },
+  { icon: "ban", text: "Plus Extra 1 Maand" },
   { icon: "check", text: "Directe Activering!" },
   { icon: "check", text: "+15.000 Kanalen" },
   { icon: "check", text: "+80.000 Films en Series (VOD)" },
