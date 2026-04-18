@@ -170,17 +170,6 @@ export default function PricingTable() {
                   </li>
                 ))}
               </ul>
-                  <li key={i} className="flex items-start gap-2 text-sm text-foreground">
-                    {f.icon === "ban" ? (
-                      <Ban className="w-4 h-4 mt-0.5 text-muted-foreground shrink-0" />
-                    ) : (
-                      <Check className={`w-4 h-4 mt-0.5 shrink-0 ${f.icon === "check-green" ? "text-success" : "text-muted-foreground"}`} />
-                    )}
-                    <span className={f.icon === "check-green" ? "font-semibold text-success" : ""}>{f.text}</span>
-                  </li>
-                ))}
-              </ul>
-
               {/* CTA */}
               <button
                 onClick={() => { setSelectedPlan({ duration: plan.duration, price: plan.price }); setDialogOpen(true); }}
