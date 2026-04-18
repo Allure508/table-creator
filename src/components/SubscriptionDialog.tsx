@@ -21,6 +21,9 @@ interface SubscriptionDialogProps {
 }
 
 export default function SubscriptionDialog({ open, onOpenChange, plan, price }: SubscriptionDialogProps) {
+  const isStandard = plan.toLowerCase().startsWith("standard");
+  const accentBg = isStandard ? "bg-premium-active hover:bg-premium-active/90" : "bg-pink-500 hover:bg-pink-600";
+  const accentText = isStandard ? "text-premium-active" : "text-foreground";
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [loading, setLoading] = useState(false);
@@ -66,17 +69,17 @@ export default function SubscriptionDialog({ open, onOpenChange, plan, price }: 
       <DialogContent className="sm:max-w-md">
         {submitted ? (
           <div className="flex flex-col items-center text-center py-6 space-y-5">
-            <div className="w-16 h-16 rounded-full bg-green-500 flex items-center justify-center">
+            <div className={`w-16 h-16 rounded-full ${isStandard ? "bg-premium-active" : "bg-green-500"} flex items-center justify-center`}>
               <CheckCircle className="w-10 h-10 text-white" />
             </div>
-            <h2 className="text-2xl font-bold text-foreground">Bedankt Voor Je Aanvraag!</h2>
+            <h2 className={`text-2xl font-bold ${accentText}`}>Bedankt Voor Je Aanvraag!</h2>
             <p className="text-muted-foreground">
               Je aanvraag is ontvangen. 📧 Binnen <strong>10 tot 60 minuten</strong> ontvang je je abonnement en betaalinformatie via e-mail of WhatsApp.
             </p>
             <p className="text-muted-foreground text-sm">Vergeet niet je spamfolder te controleren.</p>
             <a
               href="https://www.koop-iptv.nl/"
-              className="w-full flex items-center justify-center bg-pink-500 hover:bg-pink-600 text-white text-lg py-3 rounded-md font-medium transition-colors"
+              className={`w-full flex items-center justify-center ${accentBg} text-white text-lg py-3 rounded-md font-medium transition-colors`}
             >
               Naar beginpagina
             </a>
@@ -106,7 +109,7 @@ export default function SubscriptionDialog({ open, onOpenChange, plan, price }: 
                 <Label htmlFor="phone">Telefoonnummer</Label>
                 <Input id="phone" type="tel" placeholder="+31 6 12345678" value={phone} onChange={(e) => setPhone(e.target.value)} required />
               </div>
-              <Button type="submit" className="w-full" disabled={loading}>
+              <Button type="submit" className={`w-full ${isStandard ? "bg-premium-active hover:bg-premium-active/90 text-primary-foreground" : ""}`} disabled={loading}>
                 {loading ? "Verzenden..." : "Verstuur aanvraag"}
               </Button>
             </form>
